@@ -1,7 +1,9 @@
 package edu.iu.c322.test3.repository;
 
+import edu.iu.c322.test3.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.List;
 
+@Repository
 public class CustomerRepository {
     private static final Logger LOG =
             LoggerFactory.getLogger(CustomerRepository.class);
@@ -29,7 +32,7 @@ public class CustomerRepository {
         }
     }
 
-    @Override
+//    @Override
     public boolean save(Customer customer) throws IOException {
         Customer x = findByUsername(customer.getUsername());
         if(x == null) {
@@ -48,7 +51,7 @@ public class CustomerRepository {
         return false;
     }
 
-    @Override
+//    @Override
     public Customer findByUsername(String username) throws IOException {
         Path path = Paths.get(DATABASE_NAME);
         List<String> data = Files.readAllLines(path);
