@@ -7,7 +7,9 @@ import java.security.KeyPairGenerator;
 
 @Component
 public class KeyGeneratorUtils {
-    private KeyGeneratorUtils() {}
+    private KeyGeneratorUtils() {
+    }
+
     static KeyPair generateRsaKey() {
         KeyPair keyPair;
         try {
