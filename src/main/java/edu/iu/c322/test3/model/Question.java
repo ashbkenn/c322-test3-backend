@@ -27,13 +27,13 @@ public class Question {
     }
 
     public static Question fromLine(String line) {
-      String[] tokens = line.split(",");
-      String[] choiceTokens = Arrays.copyOfRange(tokens, 3, tokens.length);
-      Question q = new Question(Integer.parseInt(tokens[0]),
-              tokens[1].trim(),
-              tokens[2].trim(),
-              choiceTokens);
-      return q;
+        String[] tokens = line.split(",");
+        String[] choiceTokens = Arrays.copyOfRange(tokens, 3, tokens.length);
+        Question q = new Question(Integer.parseInt(tokens[0]),
+                tokens[1].trim(),
+                tokens[2].trim(),
+                choiceTokens);
+        return q;
     }
 
     public Integer getId() {

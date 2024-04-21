@@ -1,24 +1,16 @@
 package edu.iu.c322.test3.service;
 
-import edu.iu.c322.test3.repository.CustomerRepository;
 import edu.iu.c322.test3.model.Customer;
-//import edu.iu.c322.test3.repository.AuthenticationDBRepository;
-import edu.iu.c322.test3.repository.FileRepository;
+import edu.iu.c322.test3.repository.CustomerRepository;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.io.File;
-import java.io.IOException;
-
-@Service
-public class AuthenticationService implements
-        IAuthenticationService , UserDetailsService {
+@Component
+public class AuthenticationService implements UserDetailsService {
     CustomerRepository customerRepository;
-    FileRepository fileRepository;
 
 
     public AuthenticationService(
@@ -26,36 +18,36 @@ public class AuthenticationService implements
         this.customerRepository = customerRepository;
     }
 
-    public boolean register(Customer customer) throws IOException {
-        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-        String passwordEncoded = bc.encode(customer.getPassword());
-        customer.setPassword(passwordEncoded);
-        return customerRepository.save(customer);
-    }
+//    @Override
+//    public Customer register(Customer customer) throws IOException {
+//        BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+//        String passwordEncoded = bc.encode(customer.getPassword());
+//        customer.setPassword(passwordEncoded);
+//        return customerRepository.save(customer);
+//    }
+//
+//    @Override
+//    public boolean login(String username, String password) throws IOException {
+//        Customer customer = customerRepository.findByUsername(username);
+//        if (customer != null) {
+//            BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
+//            if(bc.matches(password, customer.getPassword())) {
+//                return true;
+//            }
+//            return false;
+//        }
+//        return false;
+//    }
+
+
 
     @Override
-    public boolean login(String username, String password) throws IOException {
-        Customer customer = customerRepository.findByUsername(username);
-        if (customer != null) {
-            BCryptPasswordEncoder bc = new BCryptPasswordEncoder();
-            if(bc.matches(password, customer.getPassword())) {
-                return true;
-            }
-            return false;
-        }
-        return false;
-    }
-
-
-
-    @Override
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
         try {
-            Customer customer =
-                    customerRepository.findByUsername(username);
-            if(customer == null) {
-                throw new UsernameNotFoundException("");
+            Customer customer = customerRepository.findByUsername(username);
+            if (customer == null) {
+                throw new UsernameNotFoundException("User not found");
             }
             return User
                     .withUsername(username)
